@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
@@ -12,6 +14,9 @@ import okhttp3.Headers
 
 class MainActivity : AppCompatActivity() {
     var petImageURL = ""
+
+    private lateinit var petList: MutableList<String>
+    private lateinit var rvPets: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +26,9 @@ class MainActivity : AppCompatActivity() {
         val imageView = findViewById<ImageView>(R.id.petImage)
 
         getNextImage(button, imageView)
+
+//        rvPets = findViewById(R.id.pet_list)
+//        petList = mutableListOf()
 
 //        Log.d("petImageURL", "pet image URL set")
     }
@@ -36,6 +44,15 @@ class MainActivity : AppCompatActivity() {
             ) {
                 Log.d("Dog", "response successful$json")
                 petImageURL = json.jsonObject.getString("message")
+
+                // If doing RecyclerView
+//                val petImageArray = json.jsonObject.getJSONArray("message")
+//                for (i in 0 until petImageArray.length()) {
+//                    petList.add(petImageArray.getString(i))
+//                }
+//                val adapter = PetAdapter(petList)
+//                rvPets.adapter = adapter
+//                rvPets.layoutManager = LinearLayoutManager(this@MainActivity)
             }
 
             override fun onFailure(
